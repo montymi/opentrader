@@ -63,7 +63,9 @@ Get started with OpenTrader in just a few steps. Follow this quick guide to inst
 
 ## Installation
 
-1. Install OpenTrader globally using npm:
+### Global
+
+1. Download and install using npm:
 
 ```bash
 npm install -g opentrader
@@ -79,6 +81,77 @@ opentrader set-password <password>
 
 ```bash
 opentrader up
+```
+
+### Process Manager
+
+1. Install pm2 globally:
+
+```bash
+npm install -g pm2
+```
+
+2. Start OpenTrader in managed process:
+
+```bash
+pm2 start opentrader --name opentrader
+```
+
+3. Save the process to restart automatically on reboot:
+ 
+```bash
+pm2 save
+pm2 startup
+```
+
+4. To stop OpenTrader:
+
+```bash
+pm2 stop opentrader
+```
+
+5. To check logs:
+
+```bash
+pm2 logs opentraderusing PM2, Docker and Codespaces 
+```
+
+### Container
+
+1. Install [Docker](https://www.docker.com/), if you have not already done so.
+   
+2. Pull the OpenTrader Docker image:
+
+```bash
+docker pull bludnic/opentrader
+```
+
+3. Run the app in a container:
+
+```bash
+docker run -d --name opentrader -p 8000:8000 -v $(pwd)/config:/app/config bludnic/opentrader
+```
+*Note*
+- -d: Runs in detached mode (in the background).
+- -p 8000:8000: Maps port 8000 on the host to 8000 in the container.
+- -v $(pwd)/config:/app/config: Mounts the local config directory into the container.
+
+4. Check the logs:
+
+```bash
+docker logs -f opentrader
+```
+
+5. Stop the container
+
+```bash
+docker stop opentrader
+```
+
+6. Remove the container
+
+```bash
+docker rm opentrader
 ```
 
 The app will start the RPC server and listen on port 8000.
